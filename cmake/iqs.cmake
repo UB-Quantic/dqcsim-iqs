@@ -1,5 +1,5 @@
 include(FetchContent)
-FetchContent_Declare(intel-qs GIT_REPOSITORY https://github.com/iqusoft/intel-qs.git)
+FetchContent_Declare(iqs GIT_REPOSITORY https://github.com/iqusoft/intel-qs.git)
 
 # disable MPI for distributed memory use
 set(IqsMPI OFF)
@@ -10,4 +10,4 @@ set(IqsNATIVE ON)
 # disable Python binding
 set(IqsPython OFF)
 
-FetchContent_MakeAvailable(intel-qs)
+FetchContent_MakeAvailable(iqs)

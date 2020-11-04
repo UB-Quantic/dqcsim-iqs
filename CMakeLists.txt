@@ -10,8 +10,8 @@ target_sources(dqcsim-intel-qs PRIVATE src/Backend.cpp)
 target_compile_features(dqcsim-intel-qs PUBLIC cxx_std_17)
 
 # dependencies
-include(cmake/intel-qs.cmake)
-target_link_libraries(dqcsim-intel-qs intel-qs)
+include(cmake/iqs.cmake)
+target_link_libraries(dqcsim-intel-qs iqs)
 
 include(cmake/dqcsim.cmake)
 target_link_libraries(dqcsim-intel-qs dqcsim)
