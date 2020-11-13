@@ -16,4 +16,8 @@ class IqsBackend {
     MeasurementSet gate(PluginState &state, Gate &&arg);
     void advance(PluginState &state, Cycle cycle);
     ArbData arb_cmd(PluginState &state, ArbCmd cmd);
+
+  private:
+    void apply_gate(QubitIndex, Matrix);
+    void apply_controlled_gate(QubitIndex, QubitIndex, Matrix);
 };

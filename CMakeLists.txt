@@ -6,7 +6,10 @@ project(dqcsim-intel-qs
 
 
 add_executable(dqcsim-intel-qs)
-target_sources(dqcsim-intel-qs PRIVATE src/Backend.cpp)
+target_sources(dqcsim-intel-qs PRIVATE
+	src/main.cpp
+	src/Backend.cpp)
+target_include_directories(dqcsim-intel-qs PUBLIC include)
 target_compile_features(dqcsim-intel-qs PUBLIC cxx_std_17)
 
 # dependencies
