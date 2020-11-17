@@ -6,7 +6,7 @@ authors = ["Sergio Sánchez Ramírez <15837247+mofeing@users.noreply.github.com>
 
 [tool.poetry.dependencies]
 python = "3.8.2"
-dqcsim = "^0.2.4"
+dqcsim = "^0.2.5"
 
 [tool.poetry.dev-dependencies]
 
