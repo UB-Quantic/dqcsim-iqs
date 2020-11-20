@@ -1,4 +1,3 @@
-#define DQCSIM_SHORT_LOGGING_MACROS
 #include <dqcsim>
 #include <qureg.hpp>
 
