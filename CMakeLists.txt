@@ -19,5 +19,5 @@ target_compile_definitions(dqcsim-iqs PRIVATE $<$<BOOL:${ENABLE_LOG}>:DQCSIM_SHO
 include(cmake/iqs.cmake)
 target_link_libraries(dqcsim-iqs iqs)
 
-include(cmake/dqcsim.cmake)
+find_package(dqcsim 0.3.0 REQUIRED)
 target_link_libraries(dqcsim-iqs dqcsim)
