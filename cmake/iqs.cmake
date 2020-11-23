@@ -10,4 +10,7 @@ set(IqsNATIVE ON)
 # disable Python binding
 set(IqsPython OFF)
 
+# disable unit tests
+set(IqsUtest OFF)
+
 FetchContent_MakeAvailable(iqs)
