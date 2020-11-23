@@ -1,8 +1,12 @@
 include(FetchContent)
 FetchContent_Declare(iqs GIT_REPOSITORY https://github.com/iqusoft/intel-qs.git)
 
-# disable MPI for distributed memory use
+# enable MPI if found in system
 set(IqsMPI OFF)
+find_package(MPI)
+if(MPI_FOUND)
+	set(IqsMPI ON)
+endif()
 
 # enable latest vector capability
 set(IqsNATIVE ON)
