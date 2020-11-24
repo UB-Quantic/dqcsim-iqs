@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(dqcsim-iqs
 	DESCRIPTION "Intel QS backend for DQCsim"
-	VERSION "0.1.0"
+	VERSION "0.2.0"
 	LANGUAGES CXX)
 
 option(LOGGING "Enable DQCsim log" ON)

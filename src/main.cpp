@@ -5,7 +5,7 @@ using namespace dqcsim::wrap;
 
 int main(int argc, char *argv[]) {
     IqsBackend backend{argc, argv};
-    return Plugin::Backend("Intel QS", "Sergio Sánchez Ramírez", "0.1")
+    return Plugin::Backend("Intel QS", "Sergio Sánchez Ramírez", "0.2")
         .with_initialize(&backend, &IqsBackend::initialize)
         .with_drop(&backend, &IqsBackend::drop)
         .with_allocate(&backend, &IqsBackend::allocate)
