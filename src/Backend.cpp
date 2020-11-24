@@ -12,11 +12,10 @@
 #define DQCSIM_IQS_TRACE(x)
 #endif
 
-#ifdef DQCSIM_IQS_MPI_ENABLED
-IqsBackend::IqsBackend(int argc, char *argv[]) : reg{1}, env{argc, argv}, rank{env.GetRank()} {}
-#else
-IqsBackend::IqsBackend(int argc, char *argv[]) : reg{1} {}
-#endif
+IqsBackend::IqsBackend(int argc, char *argv[]) : env{argc, argv}, rank{env.GetRank()}, reg{1} {
+    if (env.IsUsefulRank() == false)
+        std::exit(EXIT_FAILURE);
+}
 
 void IqsBackend::initialize(PluginState &state, ArbCmdQueue &&queue) {
     DQCSIM_IQS_TRACE("@ IqsBackend::initialize");

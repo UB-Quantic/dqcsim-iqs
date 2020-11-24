@@ -4,11 +4,9 @@
 using namespace dqcsim::wrap;
 
 class IqsBackend {
-    QubitRegister<ComplexSP> reg;
-#ifdef DQCSIM_IQS_MPI_ENABLED
     qhipster::mpi::Environment env;
+    QubitRegister<ComplexSP> reg;
     int rank;
-#endif
 
   public:
     IqsBackend(int argc, char *argv[]);
