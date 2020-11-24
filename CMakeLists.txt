@@ -4,7 +4,7 @@ project(dqcsim-iqs
 	VERSION "0.1.0"
 	LANGUAGES CXX)
 
-option(ENABLE_LOG "Enable DQCsim log" ON)
+option(LOGGING "Enable DQCsim log" ON)
 
 add_executable(dqcsim-iqs)
 target_sources(dqcsim-iqs PRIVATE
@@ -15,7 +15,7 @@ target_sources(dqcsim-iqs PRIVATE
 target_include_directories(dqcsim-iqs PUBLIC include)
 target_compile_features(dqcsim-iqs PUBLIC cxx_std_17)
 
-target_compile_definitions(dqcsim-iqs PRIVATE $<$<BOOL:${ENABLE_LOG}>:DQCSIM_SHORT_LOGGING_MACROS>)
+target_compile_definitions(dqcsim-iqs PRIVATE $<$<BOOL:${LOGGING}>:DQCSIM_SHORT_LOGGING_MACROS>)
 
 # dependencies
 include(cmake/iqs.cmake)
