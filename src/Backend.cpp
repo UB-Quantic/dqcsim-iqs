@@ -50,10 +50,6 @@ MeasurementSet IqsBackend::gate(PluginState &state, Gate &&arg) {
         DQCSIM_IQS_TRACE("\ttype=unitary");
 
         auto matrix = arg.get_matrix();
-        auto target = arg.get_targets().pop().get_index() - 1;
-        DQCSIM_IQS_TRACE("\ttarget=" + std::to_string(target));
-
-        // Controlled or single gate
         if (arg.has_controls()) {
             if (arg.get_controls().size() != 1)
                 ERROR("Cannot simulate gates with more than 2 control qubits");
@@ -61,25 +57,36 @@ MeasurementSet IqsBackend::gate(PluginState &state, Gate &&arg) {
             auto control = arg.get_controls().pop().get_index() - 1;
             DQCSIM_IQS_TRACE("\tcontrol=" + std::to_string(control));
 
-            apply_controlled_gate(control, target, matrix);
+            for (auto i = 0; i < arg.get_targets().size(); i++) {
+                auto target = arg.get_targets().pop().get_index() - 1;
+                DQCSIM_IQS_TRACE("\ttarget=" + std::to_string(target));
+                apply_controlled_gate(control, target, matrix);
+            }
         } else {
-            apply_gate(target, matrix);
+            for (auto i = 0; i < arg.get_targets().size(); i++) {
+                auto target = arg.get_targets().pop().get_index() - 1;
+                DQCSIM_IQS_TRACE("\ttarget=" + std::to_string(target));
+                apply_gate(target, matrix);
+            }
         }
+
         break;
     }
 
     case GateType::Measurement: {
         DQCSIM_IQS_TRACE("\ttype=measurement");
 
-        auto target = arg.get_measures().pop().get_index() - 1;
-        DQCSIM_IQS_TRACE("\ttarget=" + std::to_string(target));
+        for (auto i = 0; i < arg.get_measures().size(); i++) {
+            auto target = arg.get_measures().pop().get_index() - 1;
+            DQCSIM_IQS_TRACE("\ttarget=" + std::to_string(target));
 
-        auto matrix = arg.get_matrix();
-        apply_gate(target, matrix);
+            auto matrix = arg.get_matrix();
+            apply_gate(target, matrix);
 
-        auto value = reg.GetClassicalValue(target) ? MeasurementValue::One : MeasurementValue::Zero;
-        auto measurement = Measurement(target + 1, value);
-        measurement_set.set(measurement);
+            auto value = reg.GetClassicalValue(target) ? MeasurementValue::One : MeasurementValue::Zero;
+            auto measurement = Measurement(target + 1, value);
+            measurement_set.set(measurement);
+        }
 
         break;
     }
