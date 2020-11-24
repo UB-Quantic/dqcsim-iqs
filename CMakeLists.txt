@@ -9,7 +9,9 @@ option(ENABLE_LOG "Enable DQCsim log" ON)
 add_executable(dqcsim-iqs)
 target_sources(dqcsim-iqs PRIVATE
 	src/main.cpp
-	src/Backend.cpp)
+	src/Backend.cpp
+	include/Backend.hpp
+)
 target_include_directories(dqcsim-iqs PUBLIC include)
 target_compile_features(dqcsim-iqs PUBLIC cxx_std_17)
 

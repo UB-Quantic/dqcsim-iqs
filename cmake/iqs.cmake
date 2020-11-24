@@ -1,6 +1,8 @@
 include(FetchContent)
 FetchContent_Declare(iqs GIT_REPOSITORY https://github.com/iqusoft/intel-qs.git)
 
+set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
+
 # enable MPI if found in system
 set(IqsMPI OFF)
 find_package(MPI)
