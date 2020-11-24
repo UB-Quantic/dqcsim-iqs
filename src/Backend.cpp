@@ -55,6 +55,9 @@ MeasurementSet IqsBackend::gate(PluginState &state, Gate &&arg) {
 
         // Controlled or single gate
         if (arg.has_controls()) {
+            if (arg.get_controls().size() != 1)
+                ERROR("Cannot simulate gates with more than 2 control qubits");
+
             auto control = arg.get_controls().pop().get_index() - 1;
             DQCSIM_IQS_TRACE("\tcontrol=" + std::to_string(control));
 
