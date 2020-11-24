@@ -1,11 +1,10 @@
-#define DQCSIM_SHORT_LOGGING_MACROS
 #include <Backend.hpp>
 #include <dqcsim>
 
 using namespace dqcsim::wrap;
 
 int main(int argc, char *argv[]) {
-    IqsBackend backend;
+    IqsBackend backend{argc, argv};
     return Plugin::Backend("Intel QS", "Sergio Sánchez Ramírez", "0.1")
         .with_initialize(&backend, &IqsBackend::initialize)
         .with_drop(&backend, &IqsBackend::drop)

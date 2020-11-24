@@ -1,47 +1,63 @@
 #include <Backend.hpp>
 
-IqsBackend::IqsBackend() : reg{1} {}
+#ifdef DQCSIM_SHORT_LOGGING_MACROS
+#ifdef DQCSIM_IQS_MPI_ENABLED
+#define DQCSIM_IQS_TRACE(x) \
+    if (!rank)              \
+        TRACE(x);
+#else
+#define DQCSIM_IQS_TRACE(x) TRACE(x)
+#endif
+#else
+#define DQCSIM_IQS_TRACE(x)
+#endif
+
+#ifdef DQCSIM_IQS_MPI_ENABLED
+IqsBackend::IqsBackend(int argc, char *argv[]) : reg{1}, env{argc, argv}, rank{env.GetRank()} {}
+#else
+IqsBackend::IqsBackend(int argc, char *argv[]) : reg{1} {}
+#endif
 
 void IqsBackend::initialize(PluginState &state, ArbCmdQueue &&queue) {
-    INFO("@ IqsBackend::initialize");
+    DQCSIM_IQS_TRACE("@ IqsBackend::initialize");
 }
 
 void IqsBackend::drop(PluginState &state) {
-    INFO("@ IqsBackend::drop");
+    DQCSIM_IQS_TRACE("@ IqsBackend::drop");
     reg.Print("", {});
 }
 
 void IqsBackend::allocate(PluginState &state, QubitSet &&qubits, ArbCmdQueue &&queue) {
     auto n = qubits.size();
 
-    INFO("@ IqsBackend::allocate (" + std::to_string(n) + " qubits)");
+    DQCSIM_IQS_TRACE("@ IqsBackend::allocate (" + std::to_string(n) + " qubits)");
     reg.Allocate(n, 0);
     reg.Initialize("base", 0);
 }
 
 void IqsBackend::free(PluginState &state, QubitSet &&qbits) {
-    INFO("@ IqsBackend::free");
+    DQCSIM_IQS_TRACE("@ IqsBackend::free");
 }
 
 MeasurementSet IqsBackend::gate(PluginState &state, Gate &&arg) {
     using complex = dqcsim::wrap::complex;
-    INFO("@ IqsBackend::gate");
+    DQCSIM_IQS_TRACE("@ IqsBackend::gate");
 
     auto measurement_set = MeasurementSet();
 
     auto type = arg.get_type();
     switch (type) {
     case GateType::Unitary: {
-        INFO("\ttype=unitary");
+        DQCSIM_IQS_TRACE("\ttype=unitary");
 
         auto matrix = arg.get_matrix();
         auto target = arg.get_targets().pop().get_index() - 1;
-        INFO("\ttarget=" + std::to_string(target));
+        DQCSIM_IQS_TRACE("\ttarget=" + std::to_string(target));
 
         // Controlled or single gate
         if (arg.has_controls()) {
             auto control = arg.get_controls().pop().get_index() - 1;
-            INFO("\tcontrol=" + std::to_string(control));
+            DQCSIM_IQS_TRACE("\tcontrol=" + std::to_string(control));
 
             apply_controlled_gate(control, target, matrix);
         } else {
@@ -51,10 +67,10 @@ MeasurementSet IqsBackend::gate(PluginState &state, Gate &&arg) {
     }
 
     case GateType::Measurement: {
-        INFO("\ttype=measurement");
+        DQCSIM_IQS_TRACE("\ttype=measurement");
 
         auto target = arg.get_measures().pop().get_index() - 1;
-        INFO("\ttarget=" + std::to_string(target));
+        DQCSIM_IQS_TRACE("\ttarget=" + std::to_string(target));
 
         auto matrix = arg.get_matrix();
         apply_gate(target, matrix);
@@ -76,11 +92,11 @@ MeasurementSet IqsBackend::gate(PluginState &state, Gate &&arg) {
 }
 
 void IqsBackend::advance(PluginState &state, Cycle cycle) {
-    INFO("@ IqsBackend::advance");
+    DQCSIM_IQS_TRACE("@ IqsBackend::advance");
 }
 
 ArbData IqsBackend::arb_cmd(PluginState &state, ArbCmd cmd) {
-    INFO("@ IqsBackend::arb_cmd");
+    DQCSIM_IQS_TRACE("@ IqsBackend::arb_cmd");
     return ArbData();
 }
 

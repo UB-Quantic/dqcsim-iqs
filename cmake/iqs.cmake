@@ -8,6 +8,7 @@ set(IqsMPI OFF)
 find_package(MPI)
 if(MPI_FOUND)
 	set(IqsMPI ON)
+	target_compile_definitions(dqcsim-iqs PRIVATE DQCSIM_IQS_MPI_ENABLED)
 endif()
 
 # enable latest vector capability

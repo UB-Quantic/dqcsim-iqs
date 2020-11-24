@@ -5,9 +5,13 @@ using namespace dqcsim::wrap;
 
 class IqsBackend {
     QubitRegister<ComplexSP> reg;
+#ifdef DQCSIM_IQS_MPI_ENABLED
+    qhipster::mpi::Environment env;
+    int rank;
+#endif
 
   public:
-    IqsBackend();
+    IqsBackend(int argc, char *argv[]);
     void initialize(PluginState &state, ArbCmdQueue &&queue);
     void drop(PluginState &state);
     void allocate(PluginState &state, QubitSet &&qubits, ArbCmdQueue &&queue);
