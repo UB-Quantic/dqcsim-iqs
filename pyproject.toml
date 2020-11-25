@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "dqcsim-intel-qs"
-version = "0.1.0"
-description = ""
+name = "dqcsim-iqs"
+version = "0.2.0"
+description = "Intel QS backend for DQCsim"
 authors = ["Sergio Sánchez Ramírez <15837247+mofeing@users.noreply.github.com>"]
 
 [tool.poetry.dependencies]
