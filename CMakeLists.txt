@@ -23,3 +23,13 @@ target_link_libraries(dqcsim-iqs iqs)
 
 find_package(dqcsim 0.3.0 REQUIRED)
 target_link_libraries(dqcsim-iqs dqcsim)
+
+# install libiqs dependency
+install(TARGETS iqs
+	LIBRARY DESTINATION lib
+)
+
+# install executable
+install(TARGETS dqcsim-iqs
+	RUNTIME DESTINATION bin
+)
